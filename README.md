@@ -197,6 +197,17 @@ Imagen del frontend:
 ![alt text](image-6.png)
 ## Decisiones del reto
 
+### Evidencia 3: 
+
+Info del backend: 
+![alt text](image-8.png)
+
+API Vision habilitada: 
+![alt text](image-9.png)
+
+Foto con Etiquetas: 
+![alt text](image-10.png)
+
 <!-- Qué cambiaste, por qué y cómo comprobaste que funciona. -->
 
 ## Preguntas
