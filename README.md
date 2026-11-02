@@ -195,7 +195,8 @@ Bucket:
 ![alt text](image-7.png)
 Imagen del frontend: 
 ![alt text](image-6.png)
-## Decisiones del reto
+
+### Evidencia 3: 
 
 ### Evidencia 3: 
 
@@ -207,6 +208,20 @@ API Vision habilitada:
 
 Foto con Etiquetas: 
 ![alt text](image-10.png)
+
+### Evidencia 4: 
+
+| Foto | Etiquetas | Comentario |
+|:----:|-----------|------------|
+| ![Foto 1](image-11.png) | Input device 99 % · Peripheral 99 % · Electronic device 99 % | Me parece correcta la etiqueta |
+| ![Foto 2](image-12.png) | Sculpture 97 % · Statue 95 % · Monument 85 % | Muy bien asimilados |
+| ![Foto 3](image-13.png) | Facial expression 95 % · Drawing 91 % · Line art 88 % | Acertado |
+| ![Foto 4](image-14.png) | Electronic device 98 % · Text 97 % · Display device 94 % | Acertado, aunque en mi opinión Text debería ser lo primero antes de Electronic device |
+| ![Foto 5](image-15.png) | Input device 99 % · Peripheral 99 % · Electronic device 99 % | La reconoció igual de bien |
+
+## Decisiones del reto
+
+
 
 <!-- Qué cambiaste, por qué y cómo comprobaste que funciona. -->
 
