@@ -30,3 +30,9 @@ variable "imagen_frontend" {
   description = "Imagen del frontend en Artifact Registry, con su etiqueta"
   type        = string
 }
+
+variable "dias_retencion" {
+  description = "Días que viven las fotos en el bucket antes de que la regla de ciclo de vida las borre"
+  type        = number
+  default     = 7
+}

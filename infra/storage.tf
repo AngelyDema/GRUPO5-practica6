@@ -11,6 +11,18 @@ resource "google_storage_bucket" "fotos" {
   # Nadie puede hacer público el bucket ni lo que contiene, ni siquiera por error.
   public_access_prevention = "enforced"
 
+  # Borra solo los objetos (originales y miniaturas) que cumplen dias_retencion
+  # días desde su creación. Cloud Storage evalúa las reglas una vez al día, así
+  # que el borrado no ocurre al minuto exacto.
+  lifecycle_rule {
+    condition {
+      age = var.dias_retencion
+    }
+    action {
+      type = "Delete"
+    }
+  }
+
   # Sin esto, destroy falla si el bucket tiene fotos adentro.
   force_destroy = true
 

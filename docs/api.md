@@ -17,7 +17,7 @@ Cloud Run pone además `PORT`, que los dos servicios respetan.
 
 Formulario `multipart/form-data` con dos campos: `foto` (el archivo) y `autor` (texto, entre 1 y 40 caracteres).
 
-El backend abre la imagen, corrige la orientación que traen las fotos de teléfono, la reduce a una miniatura de 1024 píxeles por su lado mayor, le pide etiquetas a Cloud Vision usando esa miniatura, y guarda en el bucket el original y la miniatura. Responde `201`:
+El backend abre la imagen, corrige la orientación que traen las fotos de teléfono, la reduce a una miniatura de 1024 píxeles por su lado mayor, le pide etiquetas y texto a Cloud Vision usando esa miniatura (dos unidades de Vision por foto), y guarda en el bucket el original y la miniatura. Responde `201`:
 
 ```json
 {
@@ -28,12 +28,13 @@ El backend abre la imagen, corrige la orientación que traen las fotos de teléf
     {"nombre": "Cup", "confianza": 0.96},
     {"nombre": "Coffee cup", "confianza": 0.95}
   ],
+  "texto": "CAFÉ LA ESQUINA ABIERTO",
   "vision": "ok",
   "miniatura": "/fotos/20261026-185734-44f39d/miniatura"
 }
 ```
 
-Si Vision no responde (por ejemplo, porque la API no está habilitada), la foto se guarda igual: `etiquetas` es `null`, `vision` trae el error resumido y el backend deja una advertencia en sus registros.
+Si Vision no responde (por ejemplo, porque la API no está habilitada), la foto se guarda igual: `etiquetas` y `texto` son `null`, `vision` trae el error resumido y el backend deja una advertencia en sus registros.
 
 Errores: `400` si falta el nombre o la foto, o si el archivo no es una imagen; `413` si pesa más de 20 MB; `503` si no hay bucket.
 
@@ -54,12 +55,17 @@ miniaturas/20261026-185734-44f39d.jpg     1024 px, JPEG, con metadatos
 
 Las "carpetas" `originales/` y `miniaturas/` no existen como tales: son parte del nombre de cada objeto, y la consola las dibuja a partir de la barra.
 
-La miniatura lleva tres metadatos propios, escritos en la misma operación con que se sube:
+La miniatura lleva cuatro metadatos propios, escritos en la misma operación con que se sube:
 
 | Metadato | Contenido |
 |---|---|
 | `autor` | El nombre que escribió quien subió la foto |
 | `etiquetas` | Las etiquetas en JSON, o vacío si Vision no respondió |
+| `texto` | El texto que Vision leyó en la foto, en una sola línea y con máximo 500 caracteres (si es más largo termina en `…`). Vacío si no hay texto o si Vision no respondió |
 | `vision` | `ok`, o `error: ...` con el motivo |
 
 Los originales se guardan pero el backend nunca los sirve: lo único que sale hacia los navegadores son las miniaturas.
+
+## Ciclo de vida
+
+El bucket tiene una regla que borra cualquier objeto, original o miniatura, cuando cumple `dias_retencion` días desde su creación (7 por defecto, variable de Terraform). Cloud Storage la evalúa una vez al día, así que el borrado puede tardar unas horas más.

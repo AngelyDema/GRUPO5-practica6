@@ -89,6 +89,8 @@
   .etiquetas li .barra-conf { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--rojo-suave); overflow: hidden; }
   .etiquetas li .barra-conf i { display: block; height: 100%; background: var(--rojo); }
   .etiquetas li.baja .barra-conf i { background: var(--ambar); }
+  .texto-leido { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--fondo); font-size: 14px; overflow-wrap: anywhere; }
+  .texto-leido b { display: block; margin-bottom: 2px; color: var(--suave); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
   .sin-etiquetas { margin: 0; padding: 10px 12px; border-radius: 10px; background: #fff4e0; color: var(--ambar); font-size: 14px; }
 
   .galeria { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
@@ -98,6 +100,10 @@
   .galeria .pie b { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .galeria .pie span { color: var(--suave); display: block; line-height: 1.35; }
   .galeria .pie span.ambar { color: var(--ambar); }
+  .galeria .pie span.texto-foto {
+    margin-top: 4px; font-style: italic; overflow-wrap: anywhere;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
   .vacio { color: var(--suave); padding: 24px 16px; text-align: center; border: 1px dashed var(--borde); border-radius: var(--radio); }
 </style>
 </head>
@@ -127,6 +133,7 @@
       <p class="quien" id="res-quien"></p>
       <ul id="res-etiquetas" class="etiquetas"></ul>
       <p id="res-sin" class="sin-etiquetas" hidden></p>
+      <p id="res-texto" class="texto-leido" hidden><b>Texto en la foto</b><span id="res-texto-valor"></span></p>
     </div>
   </section>
 
@@ -207,6 +214,8 @@
       sin.textContent = "La foto se guardó, pero no llegaron etiquetas. Mira los registros del backend.";
       sin.hidden = false;
     }
+    $("#res-texto-valor").textContent = foto.texto || "";
+    $("#res-texto").hidden = !foto.texto;
     $("#resultado").hidden = false;
   }
 
@@ -233,6 +242,13 @@
         detalle.className = "ambar";
       }
       pie.append(autor, detalle);
+      if (f.texto) {
+        const texto = document.createElement("span");
+        texto.className = "texto-foto";
+        texto.textContent = `“${f.texto}”`;
+        texto.title = f.texto;
+        pie.append(texto);
+      }
       li.append(img, pie);
       galeria.append(li);
     }
