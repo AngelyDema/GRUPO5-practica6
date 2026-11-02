@@ -219,6 +219,27 @@ Foto con Etiquetas:
 | ![Foto 4](image-14.png) | Electronic device 98 % · Text 97 % · Display device 94 % | Acertado, aunque en mi opinión Text debería ser lo primero antes de Electronic device |
 | ![Foto 5](image-15.png) | Input device 99 % · Peripheral 99 % · Electronic device 99 % | La reconoció igual de bien |
 
+### Evidencia 5: 
+
+Originales: 
+![Objetos en originales/](image-17.png)
+
+Miniaturas: 
+![Objetos en miniaturas/](image-16.png)
+
+| Foto | Tamaño original | Tamaño miniatura | Diferencia |
+|:----:|:---------------:|:----------------:|:----------:|
+| ![alt text](image-18.png) | 4.1 MB | 83.6 KB | ≈ 4.0 MB menos (≈ 98 %) |
+
+Costo de la salida de datos de Cloud Run (0,19 dólares por GiB) para una galería de 20 fotos vista 100 veces:
+
+| Se envía | Peso por vista | Total en 100 vistas | Costo aproximado |
+|----------|:--------------:|:-------------------:|:----------------:|
+| Originales (4.1 MB) | ≈ 82 MB | ≈ 8 GB | ≈ 1,5 dólares |
+| Miniaturas (83.6 KB) | ≈ 1,7 MB | ≈ 170 MB | ≈ 0,03 dólares |
+
+
+
 ## Decisiones del reto
 
 
